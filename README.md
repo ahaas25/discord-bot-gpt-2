@@ -1,57 +1,23 @@
-**Status:** Archive (code is provided as-is, no updates expected)
+## Overview
 
-# gpt-2
+A very quick and dirty implementation on Open AI's GPT-2 in a Discord Bot. This was hacked together in a day and is by no means the best or most efficient way to do it. I may come back to this project to make it prettier another time.
 
-Code and models from the paper ["Language Models are Unsupervised Multitask Learners"](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf).
+## Requirements
 
-You can read about GPT-2 and its staged release in our [original blog post](https://blog.openai.com/better-language-models/), [6 month follow-up post](https://openai.com/blog/gpt-2-6-month-follow-up/), and [final post](https://www.openai.com/blog/gpt-2-1-5b-release/).
-
-We have also [released a dataset](https://github.com/openai/gpt-2-output-dataset) for researchers to study their behaviors.
-
-<sup>*</sup> *Note that our original parameter counts were wrong due to an error (in our previous blog posts and paper).  Thus you may have seen small referred to as 117M and medium referred to as 345M.*
+* General understanding of how to create and manage Discord bots
+* A trained GPT model
+* Basic understanding of Python
+* All the pre-requisites for using GPT 2 which this was forked from
+* A CUDA-Capable GPU (Recommended for better performance)
 
 ## Usage
 
-This repository is meant to be a starting point for researchers and engineers to experiment with GPT-2.
+You'll have to modify ``bot.py`` with your Discord bot token, as well as point the commands to the correct model. ``bot.py`` is a very basic Discord bot with Open AI's generation scripts pasted into it and modified to return a string rather than print to console. My model was trained off a group chat with friends, as such I've written the bot and its command to reflect this. The data format which I trained my model on follows the regular expression ``^[A-z]{3} [0-9]{2}:[0-9]{2} [A-Z]{2} - .+: "(.*)``, which looks like ``Sep 05:57 PM - Username: "Message content"``. Unless your model outputs text in this exact format, you will have to modify this bot to accommodate your needs
 
-For basic information, see our [model card](./model_card.md).
-
-### Some caveats
-
-- GPT-2 models' robustness and worst case behaviors are not well-understood.  As with any machine-learned model, carefully evaluate GPT-2 for your use case, especially if used without fine-tuning or in safety-critical applications where reliability is important.
-- The dataset our GPT-2 models were trained on contains many texts with [biases](https://twitter.com/TomerUllman/status/1101485289720242177) and factual inaccuracies, and thus GPT-2 models are likely to be biased and inaccurate as well.
-- To avoid having samples mistaken as human-written, we recommend clearly labeling samples as synthetic before wide dissemination.  Our models are often incoherent or inaccurate in subtle ways, which takes more than a quick read for a human to notice.
-
-### Work with us
-
-Please [let us know](mailto:languagequestions@openai.com) if you’re doing interesting research with or working on applications of GPT-2!  We’re especially interested in hearing from and potentially working with those who are studying
-- Potential malicious use cases and defenses against them (e.g. the detectability of synthetic text)
-- The extent of problematic content (e.g. bias) being baked into the models and effective mitigations
-
-## Development
-
-See [DEVELOPERS.md](./DEVELOPERS.md)
-
-## Contributors
-
-See [CONTRIBUTORS.md](./CONTRIBUTORS.md)
-
-## Citation
-
-Please use the following bibtex entry:
-```
-@article{radford2019language,
-  title={Language Models are Unsupervised Multitask Learners},
-  author={Radford, Alec and Wu, Jeff and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
-  year={2019}
-}
-```
-
-## Future work
-
-We may release code for evaluating the models on various benchmarks.
-
-We are still considering release of the larger models.
+There are three commands to interact with this bot. 
+* ``!g <prompt>``, which generates based off a prompt, or a random one if none is provided.
+* ``!r <prompt>``, which replies to a prompt. Example ``!r Hi, how are you?`` responds ``I'm good!``. This command assumes the model to return a string following the regexp mentioned above, and cuts out the irrelevant information to mimic a response from the bot.
+* ``!c <prompt>``, which continues a prompt. Example ``!c My name is`` to which the bot will continue the prompt with ``My name is Jojgo``
 
 ## License
 
